@@ -2,4 +2,5 @@ python-multipart
 fastapi
 pydantic[email]
 uvicorn
+starlette
 
