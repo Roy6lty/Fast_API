@@ -1,4 +1,4 @@
-from src import app, Form, File, UploadFile, HTTPException, Request
+from src import app, Form, File, UploadFile, HTTPException, Request, status
 from src import JSONResponse
 from src import BaseModel, List
 from src import Optional
@@ -6,6 +6,7 @@ from src import Optional
 from fastapi.exceptions import RequestValidationError
 
 from fastapi.responses import PlainTextResponse
+from starlette.exceptions import HTTPException as starletteHTTPException
  
 items ={
     "Apple":{"description": "Delicious Fruit"}
@@ -26,7 +27,7 @@ class UnicornException(Exception):
 
 @app.exception_handler(UnicornException)
 async def unicorn_exception_handler(request: Request, exc: UnicornException):
-    return JSONResponse(status_code=418, content={"message":f"exeception with {exc.name} did something"})
+    return JSONResponse(status_code=status.HTTP_418_IM_A_TEAPOT, content={"message":f"exeception with {exc.name} did something"})
 
 @app.get('/error_handling/unicorn/{name}')
 async def unicorn_handled(name:str):
@@ -34,14 +35,19 @@ async def unicorn_handled(name:str):
         raise UnicornException(name=name)
     return {"unicorn_name":name}
 
-
+# Overiding the default error and returning a customized message
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request,  exc ):
-    return PlainTextResponse(str(exc, status = 400))
+    return PlainTextResponse(str(exc, status = status.HTTP_400_BAD_REQUEST))
+
+
+@app.exception_handler(starletteHTTPException)
+async def http_exception_handler(request, exc):
+    return PlainTextResponse(str(exc.detail), status_code = exc.status_code)
 
 
 @app.get('/validationitems')
 async def Request_vaildation(item_id:int):
     if item_id == 3:
-        raise HTTPException(status_code=413, detail="i dont like 3")
+        raise HTTPException(status_code=400, detail="i dont like 3")
     return {"items_id": item_id}

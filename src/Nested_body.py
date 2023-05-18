@@ -1,4 +1,4 @@
-from src import app,Body, BaseModel, HttpUrl 
+from src import app,Body, BaseModel, HttpUrl,status
 
 from datetime import date
 
@@ -41,3 +41,6 @@ async def update_multiple_items(books: dict[int, float]):
 
 
 
+@app.post('/path_operations/create_items',status_code=status.HTTP_201_CREATED )
+async def path_operations_create(item_id:int, item:Item):
+    return {"item_id":item_id, "item":item}
