@@ -200,3 +200,21 @@ def get_mulitiple_objects(
 
  
 
+fake_db = dict(
+    Johndoe =dict(
+    username ="johndoe",
+    full_name = "John Doe",
+    email = "johndoe@example.com",
+    hashed_password = "$2b$12$OxqoDDD5Oxc3b6eAPOx.h.1M.CBIbanaJDFxU5POZCaWLp8vmhqiu",
+    disabled= False
+    
+    ),
+    maryjane =dict(
+    username ="maryjane",
+    full_name = "mary jane",
+    email = "maryjane@example.com",
+    hashed_password = "fakepassword2",
+    disabled= True
+    )
+)
+

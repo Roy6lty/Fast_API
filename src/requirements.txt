@@ -3,4 +3,6 @@ fastapi
 pydantic[email]
 uvicorn
 starlette
-
+passlib[bcrypt]
+python-jose[crytography]
+sQlAlchemy

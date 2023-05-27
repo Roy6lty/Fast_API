@@ -24,7 +24,7 @@ class Discount(BaseModel):
 
 class Shops (BaseModel):
     name: str
-    url: HttpUrl #vaildate website string
+    url: HttpUrl #vajildate website string
     item: Optional[Item] = None
     discount: Optional[Discount] = None 
 
